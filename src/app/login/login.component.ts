@@ -83,7 +83,7 @@ export class LoginComponent implements OnInit{
 
   handleResponse(data: any) {
     // console.log('after',data);
-    this.Token.handle(data[0].token);
+    this.Token.handle(data.token);
     this.router.navigateByUrl('/dashboard');
   }
 }

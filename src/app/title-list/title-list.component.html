@@ -1,0 +1,129 @@
+<div class="px-3 main">
+    <div class="">
+        <div class="row">
+          <div class="col-md-12 p-3">
+            <h3 class="text-Info title">All Title</h3>
+            <div class="card shadow-lg">
+              <h5 class="text-center mt-4">Title List</h5>
+              <hr>
+              <div class="table-responsive">
+                <table class="table">
+                  <div class="px-4">
+                    <div class="table-wrapper" id="tab">
+                      <!--Table-->
+                      <table class="table table-hover mb-0">
+                        <!--Table head-->
+                        <thead>
+                          <tr >
+                            <th>Id</th>
+                            <th class="th-lg">
+                              Title
+                            </th>
+                            <th class="th-lg">
+                              Status
+                            </th>
+                          </tr>
+                        </thead>
+    
+                        <tbody>
+                          <tr *ngFor="let title of allTitle">
+                            <td>{{title.id}}</td>
+                            <td>{{title.name}}</td>
+                            
+                            <td [ngClass]="title.is_active ? 'active' : 'inactive'"><span class="status text-center">{{
+                                title.is_active ? 'Active' : 'Inactive' }}</span></td>
+    
+                            <td>
+                              
+                          </tr>
+                        </tbody>
+                        <!--Table body-->
+                      </table>
+    
+                      <!--Table-->
+                    </div>
+    
+                  </div>
+                </table>
+              </div>
+              <!-- <ng-template #update>
+                <div class="modal-dialog m-0" role="document">
+                  <div class="modal-dialog p-3" role="document">
+                    <form #indexForm="ngForm" (ngSubmit)="on_Submit()">
+                      <div class="modal-content ">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">
+                            Update Index Slider
+                          </h5>
+                          <button type="button" class="close1 bg-white" aria-label="Close" (click)="modalRef?.hide()">
+                            <span aria-hidden="true" class="close1 text-dark">Close</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <div class="row d-flex">
+                            <div class="col-md-6 create">
+                              <label for="name" class="text-info"><small>Title</small></label>
+                              <div class="input-group mb-3">
+    
+                                <input type="text" name="Project id" class="form-control" aria-label="Default"
+                                  [(ngModel)]="indexUpdate.title" placeholder="Update Title" required />
+                              </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                              <label class="text-info"><small>Image</small></label>
+                              <img [src]="'http://localhost:8000/index/' + indexUpdate.image" alt="Assignee Image"
+                                class="rounded-circle ms-2 mt-2" width="200" height="200" />
+                            </div>
+                          </div>
+                          <div class="col-md-6 create">
+                            <label for="name" class="text-info"><small>Content</small></label>
+                            <div class="input-group mb-3">
+    
+                              <input type="text" name="Project Name" class="form-control" aria-label="Default"
+                                [(ngModel)]="indexUpdate.content" placeholder="Project Name" required />
+                            </div>
+                          </div>
+                          <div class="row mt-5">
+                            <label for="name" class="text-info"><small>Button Text</small></label>
+                            <div class="col-md-12 mb-3">
+                              <textarea id="w3review" name="w3review" rows="4" cols="60" class="form-control"
+                                [(ngModel)]="indexUpdate.button_text" placeholder="Description" required></textarea>
+                            </div>
+                          </div>
+                          <div class="row d-flex">
+    
+                            <div class="col-md-6 create">
+                              <label for="name" class="text-info"><small>Status</small></label>
+                              <div class="input-group mb-4">
+                                <select type="text" name="Status" class="form-select" aria-label="Default"
+                                  [(ngModel)]="indexUpdate.is_active" placeholder="status" required>
+                                  <option value="1">Yes</option>
+                                  <option value="0">No</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-md-6 create">
+                              <label for="name" class="text-info"><small>Button link</small></label>
+                              <div class="input-group ">
+                                <input type="text" name="remarks" class="form-control" [(ngModel)]="indexUpdate.button_link"
+                                  aria-label="Default" placeholder="Remarks" required />
+                              </div>
+                            </div>
+                          </div>
+    
+                        </div>
+                        <div class="footer text-center align-items-center mb-4">
+                          <button type="submit" class="btn btn-primary" [disabled]="!indexForm.valid">
+                            Update
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </ng-template> -->
+            </div>
+          </div>
+        </div>
+      </div>
+</div>

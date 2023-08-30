@@ -13,7 +13,9 @@ import{FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpClientModule ,HTTP_INTERCEPTORS} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-
+import { TitleListComponent } from './title-list/title-list.component';
+import { SubtitleListComponent } from './subtitle-list/subtitle-list.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +24,9 @@ import { ToastrModule } from 'ngx-toastr';
     MainContentComponent,
     DashboardComponent,
     AboutComponent,
-    LoginComponent
+    LoginComponent,
+    TitleListComponent,
+    SubtitleListComponent
   ],
   imports: [
     BrowserModule,
@@ -32,6 +36,7 @@ import { ToastrModule } from 'ngx-toastr';
     HttpClientModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
+    ModalModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

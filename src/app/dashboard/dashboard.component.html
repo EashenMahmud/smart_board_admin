@@ -1,11 +1,12 @@
 <div class="px-3 main">
-    <div class="p-lg-5 m-lg-5">
-        <div class="row">
-            <div class="col-md-6 p-3">
-                <h3 class="text-Info title">Introduction</h3>
-                <div class="card shadow-lg">
-                    <h5 class="text-center">Add Introduction content</h5>
-                    <div class="card-body">
+  <div class="">
+    <div class="row">
+      <div class="col-md-12 p-3">
+        <h3 class="text-Info title">Introduction</h3>
+        <div class="card shadow-lg">
+          <h5 class="text-center mt-4">Add Introduction content</h5>
+          <hr>
+          <!-- <div class="card-body">
                         <div>
                             <input type="text" class="form-control mb-3" placeholder="Add the title here">
                         </div>
@@ -17,30 +18,411 @@
                         <input type="text" class="form-control mb-3" placeholder="Add Button Name">
                         <input type="text" class="form-control" placeholder="Add Button Link">
                     </div>
-                    <div class="text-center mb-3">
-                        <button type="submit" class="btn btn-primary">Upload</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 p-3">
-                <h3 class="text-Info title">Product</h3>
-                <div class="card shadow-lg">
-                    <h5 class="text-center">Add Product content</h5>
-                    <div class="card-body">
-                        <input type="text" class="form-control mb-3" placeholder="Add the title here">
-                        <input type="text" class="form-control" placeholder="Add the Heading here">
-                        <div class="mb-3">
-                            <label for="image" class="form-label">Select a product Image</label>
-                            <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                    <div class="d-flex justify-content-center">
+                        <div class="text-center mb-3 m-3">
+                            <button type="submit" class="btn btn-primary">Create</button>
                         </div>
-                        <input type="text" class="form-control mb-3" placeholder="Add Button Name">
-                        <input type="text" class="form-control" placeholder="Add Button Link">
-                    </div>
-                    <div class="text-center mb-3">
-                        <button type="submit" class="btn btn-primary">Upload</button>
-                    </div>
+                        <div class="text-center mb-3 m-3">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </div> -->
+
+          <div class="table-responsive">
+            <table class="table">
+              <div class="px-4">
+                <div class="table-wrapper" id="tab">
+                  <!--Table-->
+                  <table class="table table-hover mb-0">
+                    <!--Table head-->
+                    <thead>
+                      <tr>
+                        <th class="th-lg">
+                          Title
+                        </th>
+                        <th class="th-lg">
+                          Image
+                        </th>
+                        <th class="th-lg">
+                          Content
+                        </th>
+                        <th class="th-lg">
+                          Button Text
+                        </th>
+                        <th class="th-lg ">
+                          Button Link
+                          <!-- *ngFor="let emp of ProjectList"> {{emp.ProjectList}} -->
+                          <!-- {{emp.status}} -->
+                          <!-- <span [ngClass]="getStatusColor(status)">Status: {{ status }}</span> -->
+                        </th>
+                        <th class="th-lg">
+                          Status
+                        </th>
+                        <th class="th-lg">
+                          Action
+                        </th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <tr *ngFor="let ind of sliderList">
+                        <td>{{ind.title}}</td>
+                        <td>
+                          <a href="javascript:void(0)"
+                            (click)="openImageWindow('http://localhost:8000/index/' + ind.image)">
+                            <img [src]="'http://localhost:8000/index/' + ind.image" alt=""
+                              class="rounded-circle ms-2 mt-2" width="40" height="40" />
+                          </a>
+                        </td>
+                        <td>{{ind.content}}</td>
+                        <td>{{ind.button_text}}</td>
+                        <td>{{ind.button_link}}</td>
+                        <td [ngClass]="ind.is_active ? 'active' : 'inactive'"><span class="status text-center">{{
+                            ind.is_active ? 'Active' : 'Inactive' }}</span></td>
+
+                        <td>
+                          <div class="d-inline-flex">
+                            <button class="btn btn-primary text-white btn-sm "><i class="fa-solid fa-plus"></i>
+                            </button>
+                            <button class="btn btn-primary text-white btn-sm ms-3" (click)="openModal(update)"
+                              (click)="edit(ind)"><i class="fa-solid fa-pen-to-square"></i> </button>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                    <!--Table body-->
+                  </table>
+
+                  <!--Table-->
                 </div>
+
+              </div>
+            </table>
+          </div>
+          <ng-template #update>
+            <div class="modal-dialog m-0" role="document">
+              <div class="modal-dialog p-3" role="document">
+                <form #indexForm="ngForm" (ngSubmit)="on_Submit()">
+                  <div class="modal-content ">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">
+                        Update Index Slider
+                      </h5>
+                      <button type="button" class="close1 bg-white" aria-label="Close" (click)="modalRef?.hide()">
+                        <span aria-hidden="true" class="close1 text-dark">Close</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="row d-flex">
+                        <div class="col-md-6 create">
+                          <label for="name" class="text-info"><small>Title</small></label>
+                          <div class="input-group mb-3">
+
+                            <input type="text" name="Project id" class="form-control" aria-label="Default"
+                              [(ngModel)]="indexUpdate.title" placeholder="Update Title" required />
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label class="text-info"><small>Image</small></label>
+                          <img [src]="'http://localhost:8000/index/' + indexUpdate.image" alt="Assignee Image"
+                            class="rounded-circle ms-2 mt-2" width="200" height="200" />
+                        </div>
+                        <!-- <label for="file" class="">Change Your Profile Picture</label>
+          <div class="col-xl-6  d-flex justify-content-center">
+            <input
+              type="file"
+              class="form-control"
+              (change)="imageUpload($event)"
+              formControlName="file"
+              placeholder="Upload"
+            />
+          </div> -->
+                      </div>
+                      <div class="col-md-6 create">
+                        <label for="name" class="text-info"><small>Content</small></label>
+                        <div class="input-group mb-3">
+
+                          <input type="text" name="Project Name" class="form-control" aria-label="Default"
+                            [(ngModel)]="indexUpdate.content" placeholder="Project Name" required />
+                        </div>
+                      </div>
+                      <div class="row mt-5">
+                        <label for="name" class="text-info"><small>Button Text</small></label>
+                        <div class="col-md-12 mb-3">
+                          <textarea id="w3review" name="w3review" rows="4" cols="60" class="form-control"
+                            [(ngModel)]="indexUpdate.button_text" placeholder="Description" required></textarea>
+                        </div>
+                      </div>
+                      <div class="row d-flex">
+
+                        <div class="col-md-6 create">
+                          <label for="name" class="text-info"><small>Status</small></label>
+                          <div class="input-group mb-4">
+                            <select type="text" name="Status" class="form-select" aria-label="Default"
+                              [(ngModel)]="indexUpdate.is_active" placeholder="status" required>
+                              <option value="1">Yes</option>
+                              <option value="0">No</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-6 create">
+                          <label for="name" class="text-info"><small>Button link</small></label>
+                          <div class="input-group ">
+                            <input type="text" name="remarks" class="form-control" [(ngModel)]="indexUpdate.button_link"
+                              aria-label="Default" placeholder="Remarks" required />
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="footer text-center align-items-center mb-4">
+                      <button type="submit" class="btn btn-primary" [disabled]="!indexForm.valid">
+                        Update
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
             </div>
+          </ng-template>
         </div>
+      </div>
     </div>
+  </div>
+
+  <!-- Product SECTION -->
+
+  <div class="row p-3 d-flex justify-content-center">
+    <!-- <h3 class="text-Info title">Product</h3> -->
+    <div class="col-md-8">
+      <div class="card shadow-lg">
+        <div class="card-header text-center d-flex justify-content-between align-items-center">
+          <h4 class="mx-auto">Product Section</h4>
+          <div class="px-2">
+            <button class="btn btn-primary" (click)="openModal(ProductUpdate)">Update</button>
+          </div>
+          <div>
+            <button class="btn btn-success">Create</button>
+          </div>
+        </div>
+        <div class="card-body">
+          <h6 class="d-none">ID: {{productID}}</h6>
+          <h6 class="d-none">TitleID: {{productTitleId}}</h6>
+          <h5>Product Title: {{title}}</h5>
+          <div class="text center">
+            <h6>Product image:</h6>
+            <a href="javascript:void(0)" (click)="openImageWindow('http://localhost:8000/index/' + ind.image)">
+              <img [src]="'http://localhost:8000/index/' + product_image" alt="" class=" ms-2 mt-2" width="200"
+                height="200" />
+            </a>
+            <p [ngClass]="productActive ? 'active' : 'inactive'"><span class="status text-center">Status: {{
+                productActive ? 'Active' : 'Inactive' }} </span> </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-template #ProductUpdate>
+    <div class="modal-dialog m-0" role="document">
+      <div class="modal-dialog p-3" role="document">
+        <form [formGroup]="productUpdateForm" (ngSubmit)="ProductUpdateSubmit()">
+          <div class="modal-content ">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
+                Update Product Information
+              </h5>
+              <button type="button" class="close1 bg-white" aria-label="Close" (click)="modalRef?.hide()">
+                <span aria-hidden="true" class="close1 text-dark">Close</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row d-flex">
+                <div class="col-md-12 create">
+                  <div class="input-group mb-3 d-none">
+                    <input type="text" name="id" class="form-control" aria-label="Default"
+                    formControlName="id" placeholder="Update Title"  />
+                  </div>
+                  <div class="input-group mb-3 d-none">
+                    <input type="text" name="title_id" class="form-control" aria-label="Default"
+                    formControlName="title_id" placeholder="Update Title"  />
+                  </div>
+                  <label for="name" class="text-info"><small>Title</small></label>
+                  <div class="input-group mb-3">
+                    <input type="text" name="title" class="form-control" aria-label="Default"
+                    formControlName="title" placeholder="Update Title"  />
+                  </div>
+                </div>
+                <!-- upload Image -->
+                <div>
+                  <label class="text-info"><small>Upload New Image</small></label>
+                  <input type="file" name="product_image" class="form-control" (change)="onFileChange($event)" />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="text-info"><small>Image</small></label>
+                  <img [src]="'http://localhost:8000/index/' + productUpdateForm.value.product_image" alt="Assignee Image"
+                  class="ms-2 mt-2" width="200" height="200" />
+                </div>
+
+              </div>
+              <div class="row d-flex">
+                <div class="input-group mb-4" >
+                  <select type="text" name="is_active" class="form-select" aria-label="Default"
+                    formControlName="is_active">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="footer text-center align-items-center mb-4">
+              <button type="submit" class="btn btn-primary" [disabled]="!productUpdateForm.valid">
+                Update
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </ng-template>
+
+
+  <!-- PANEL -->
+
+  <div class="row p-3 d-flex justify-content-center">
+    <!-- <h3 class="text-Info title">Product</h3> -->
+    <div class="col-md-8">
+      <div class="card shadow-lg">
+        <div class="card-header text-center d-flex justify-content-between align-items-center">
+          <h4 class="mx-auto">Panel Section</h4>
+          <div class="px-2">
+            <button class="btn btn-primary" (click)="openModal(PanelUpdate)">Update</button>
+          </div>
+          <div>
+            <button class="btn btn-success">Create</button>
+          </div>
+        </div>
+        <div class="card-body">
+          <h6 class="d-none">ID: {{panelID}}</h6>
+          <h6 class="d-none">TitleID: {{panelTitleId}}</h6>
+          <h5>Panel Title: {{panelTitle}}</h5>
+          <p>Description: {{panelDescription}}</p>
+          <div class="text center">
+            <h6>Panel image:</h6>
+            <a href="javascript:void(0)" (click)="openImageWindow('http://localhost:8000/index/' + ind.image)">
+              <img [src]="'http://localhost:8000/index/' + Panel_image" alt="" class=" ms-2 mt-2" width="200"
+                height="200" />
+            </a>
+            <p [ngClass]="panelActive ? 'active' : 'inactive'"><span class="status text-center">Status: {{
+                panelActive ? 'Active' : 'Inactive' }} </span> </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+<ng-template #PanelUpdate>
+  <div class="modal-dialog m-0" role="document">
+    <div class="modal-dialog p-3" role="document">
+      <form [formGroup]="panelUpdateForm" (ngSubmit)="panelUpdateSubmit()">
+        <div class="modal-content ">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Update Panel Information
+            </h5>
+            <button type="button" class="close1 bg-white" aria-label="Close" (click)="modalRef?.hide()">
+              <span aria-hidden="true" class="close1 text-dark">Close</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row d-flex">
+              <div class="col-md-12 create">
+                <div class="input-group mb-3 d-none">
+                  <input type="text" name="id" class="form-control" aria-label="Default"
+                  formControlName="id" placeholder="Update Title"  />
+                </div>
+                <div class="input-group mb-3 d-none">
+                  <input type="text" name="title_id" class="form-control" aria-label="Default"
+                  formControlName="title_id" placeholder="Update Title"  />
+                </div>
+                <!-- <label for="name" class="text-info"><small>Title</small></label>
+                <div class="input-group mb-3">
+                  <input type="text" name="title" class="form-control" aria-label="Default"
+                  formControlName="title" placeholder="Update Title"  />
+                </div> -->
+                <label for="name" class="text-info"><small>Description</small></label>
+                <div class="input-group mb-3">
+                  <input type="text" name="description" class="form-control" aria-label="Default"
+                  formControlName="description" placeholder="Update description"  />
+                </div>
+              </div>
+              <!-- upload Image -->
+              <div>
+                <label class="text-info"><small>Upload New Image</small></label>
+                <input type="file" name="image" class="form-control" (change)="onFileChange($event)" />
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="text-info"><small>Image</small></label>
+                <img [src]="'http://localhost:8000/index/' + panelUpdateForm.value.image" alt="Assignee Image"
+                class="ms-2 mt-2" width="200" height="200" />
+              </div>
+
+            </div>
+            <div class="row d-flex">
+              <div class="input-group mb-4">
+                <select type="text" name="is_active" class="form-select" aria-label="Default"
+                  formControlName="is_active">
+                  <option value="1">Yes</option>
+                  <option value="0">No</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="footer text-center align-items-center mb-4">
+            <button type="submit" class="btn btn-primary" [disabled]="!panelUpdateForm.valid">
+              Update
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</ng-template>
+
+
+
+<!-- <form #productForm="ngForm" (ngSubmit)="on_Submitt()">
+        <h5 class="text-center">Add Product content</h5>
+        <div class="card-body">
+          
+          <p>Title ID: {{ titleId }}</p>
+          <label for="image" class="form-label">Add Title Here</label>
+          <input type="text" class="form-control mb-3" [(ngModel)]="titleProduct" name="titleProduct"
+            placeholder="Add the title here">
+
+          <a href="javascript:void(0)" (click)="openImageWindow('http://localhost:8000/index/' + ind.image)">
+            <img [src]="'http://localhost:8000/index/' + product_image" alt="" class=" ms-2 mt-2" width="100"
+              height="150" />
+          </a>
+          <div class="mb-3">
+            <label for="image" class="form-label">Change product Image</label>
+            <input type="file" class="form-control" id="image" name="image" accept="image/*">
+          </div>
+          <div>
+            <p [ngClass]="productActive ? 'active' : 'inactive'"><span class="status text-center">{{
+              productActive ? 'Active' : 'Inactive' }}</span></p>
+          </div>
+          <div class="col-md-6 create">
+            <label for="name" class="text-info"><small>Status</small></label>
+            <div class="input-group mb-4">
+              <select type="text" name="Status" class="form-select" aria-label="Default"
+                [(ngModel)]="indexUpdate.is_active" placeholder="status" required>
+                <option value="1">Active</option>
+                <option value="0">Inactive</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="text-center mb-3">
+          <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+      </form> -->
